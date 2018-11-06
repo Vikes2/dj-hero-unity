@@ -89,7 +89,9 @@ namespace dj_hero
             //Player.settings.volume = 20;
             //Player2.settings.volume = 80;
 
-            string primaryPath = @"../../media";
+            string primaryPath = Path.Combine(Application.dataPath, "Songs");
+
+            Debug.Log(Application.dataPath);
 
             if (!Directory.Exists(primaryPath))
             {
@@ -128,6 +130,9 @@ namespace dj_hero
 
 
 
-        //public static List<Song> GetSongList() => songs.OrderBy(order => order.getDifficulty().GetOrder()).ToList();
+        public static List<Song> GetSongList()
+        {
+            return songs.OrderBy(order => order.getDifficulty().GetOrder()).ToList();
+        }
     }
 }

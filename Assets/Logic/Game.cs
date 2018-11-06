@@ -40,7 +40,7 @@ namespace dj_hero
         {
             time--;
 
-            game.view.DisplayTime(time);
+            //game.view.DisplayTime(time);
 
 
             if (time <= 0)
@@ -104,27 +104,27 @@ namespace dj_hero
             t = new Thread(delegate ()
             {
 
-                while (true)
-                {
-                    currentCharacter = keyTimer.getCharacter();
-                    if (currentCharacter == mainElement.character.ToString().ToUpper())
-                    {
-                        SuccesedClick();
-                    }
-                    else
-                    {
-                        if (currentCharacter == "ESCAPE")
-                        {
-                            gameOverByUserInterrupt = true;
-                            EndGame();
-                        }
-                        else
-                        {
-                            MissClick();
-                        }
-                    }
+                //while (true)
+                //{
+                //    currentCharacter = keyTimer.getCharacter();
+                //    if (currentCharacter == mainElement.character.ToString().ToUpper())
+                //    {
+                //        SuccesedClick();
+                //    }
+                //    else
+                //    {
+                //        if (currentCharacter == "ESCAPE")
+                //        {
+                //            gameOverByUserInterrupt = true;
+                //            EndGame();
+                //        }
+                //        else
+                //        {
+                //            MissClick();
+                //        }
+                //    }
                     
-                }
+                //}
 
             });
             t.Start();
@@ -152,11 +152,11 @@ namespace dj_hero
         {
             // ++ points
             points += 10;
-            view.DisplayPoints(points);
+            //view.DisplayPoints(points);
             // progres bar ++
             IncreaseProgresBar();
             //load next segment
-            mainElement.counter--;
+            //mainElement.counter--;
             LoadSegment();
         }
 
@@ -164,17 +164,17 @@ namespace dj_hero
         {
             if (gameOverProcesDone)
                 return;
-            Audio.StartServiceTrack("beep");
+            //Audio.StartServiceTrack("beep");
 
             // progresbar -- or nothing
             DecreaseProgresBarPerMiss();
             // load next segment
-            mainElement.counter = 0;
+            //mainElement.counter = 0;
             LoadSegment();
         }
 
-        private AppearingChar mainElement;
-        private Queue<AppearingChar> queue = new Queue<AppearingChar>();
+        //private AppearingChar mainElement;
+        //private Queue<AppearingChar> queue = new Queue<AppearingChar>();
         private void LoadSegment()
         {
             if(gameOverProcesDone)
@@ -185,34 +185,34 @@ namespace dj_hero
             //========================
             //3 posibility
             //first load
-            if (mainElement == null)
-            {
+            //if (mainElement == null)
+            //{
 
-                for (int i = 1; i <= matchOpttions.amountElementsSameTime; i++)
-                {
-                    mainElement = new AppearingChar(matchOpttions);
-                    queue.Enqueue(mainElement);
-                    view.Add(mainElement);
-                }
-                mainElement = queue.Dequeue();
+            //    for (int i = 1; i <= matchOpttions.amountElementsSameTime; i++)
+            //    {
+            //        mainElement = new AppearingChar(matchOpttions);
+            //        queue.Enqueue(mainElement);
+            //        view.Add(mainElement);
+            //    }
+            //    mainElement = queue.Dequeue();
 
-                return;
-            }
-            //refresh
-            if (mainElement.counter > 0)
-            {
-                view.UpdateCharacter(mainElement);
-            }
-            //hit
-            if (mainElement.counter == 0)
-            {
-                mainElement = new AppearingChar(matchOpttions);
-                queue.Enqueue(mainElement);
-                view.Add(mainElement);
+            //    return;
+            //}
+            ////refresh
+            //if (mainElement.counter > 0)
+            //{
+            //    view.UpdateCharacter(mainElement);
+            //}
+            ////hit
+            //if (mainElement.counter == 0)
+            //{
+            //    mainElement = new AppearingChar(matchOpttions);
+            //    queue.Enqueue(mainElement);
+            //    view.Add(mainElement);
 
-                mainElement = queue.Dequeue();
+            //    mainElement = queue.Dequeue();
 
-            }
+            //}
         }
         private Thread endGameThread;
         public void EndGame()
@@ -220,12 +220,12 @@ namespace dj_hero
             if (timer != null)
             {
                 timer.StopTimer();
-                keyTimer.StopTimer();
+                //keyTimer.StopTimer();
             }
             timer = null;
             try
             {
-                Audio.StopSong();
+                //Audio.StopSong();
             }
             catch { };
 
@@ -248,7 +248,7 @@ namespace dj_hero
             if (progresBarValue < 1)
                 return;
             progresBarValue -= matchOpttions.progresBarLosePerSec;
-            view.DisplayProgressBar(progresBarValue);
+            //view.DisplayProgressBar(progresBarValue);
             if (progresBarValue < 1)
             {
                 EndGame();
@@ -260,7 +260,7 @@ namespace dj_hero
             if (progresBarValue < 1)
                 return;
             progresBarValue -= matchOpttions.decPointsPerMiss;
-            view.DisplayProgressBar(progresBarValue);
+            //view.DisplayProgressBar(progresBarValue);
             if (progresBarValue < 1)
             {
                 EndGame();
@@ -270,7 +270,7 @@ namespace dj_hero
         public void IncreaseProgresBar()
         {
             progresBarValue += matchOpttions.incPointsPerSucceed;
-            view.DisplayProgressBar(progresBarValue);
+            //view.DisplayProgressBar(progresBarValue);
             if (progresBarValue > 100)
                 progresBarValue = 100;
         }
