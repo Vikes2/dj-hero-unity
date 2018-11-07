@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Audio.PrepareSongs();
+        //Audio.PrepareSongs();
 	}
 	
 	// Update is called once per frame
