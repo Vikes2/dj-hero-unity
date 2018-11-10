@@ -35,13 +35,15 @@ public class NewGame : MonoBehaviour {
 
             songSelectionAudio.Play();
 
-            Debug.Log(songs.Count);
+            //Debug.Log(songs.Count);
 
             for(int i = 0; i < songs.Count; i++)
             {
                 GameObject songElement = Instantiate(songPrefab); //Inicjalizuje nowy obiekt na liście
                 songElement.transform.SetParent(songContainer.transform, false); //Ustawia go na liście
                 songElement.GetComponent<SongElement>().Song = songs[i]; //Nadaje mu obiekt piosenki
+                songElement.GetComponent<SongElement>().nickname = nicknameInput.text;
+
                 songItems.Add(songElement); //Dodaje do listy prefabów
             }
         }

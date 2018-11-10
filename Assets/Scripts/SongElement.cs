@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using dj_hero;
+using UnityEngine.SceneManagement;
+using Assets.Managers;
 
 public class SongElement : MonoBehaviour {
 
     public TMP_Text titleText;
     private string title;
     private Song song;
+    public string nickname;
     
     public string Title
     {
@@ -35,6 +38,17 @@ public class SongElement : MonoBehaviour {
             titleText.text = song.GetTitle();
         }
     }
+
+    public void SongOnClick()
+    {
+        MatchOption matchOptions = new MatchOption(song);
+        matchOptions.nickname = nickname;
+        GameManager.options = matchOptions;
+        GameManager.song = song;
+        SceneManager.LoadScene(2);
+        
+    }
+
 
 	// Use this for initialization
 	void Start () {

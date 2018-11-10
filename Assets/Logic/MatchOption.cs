@@ -15,7 +15,7 @@ namespace dj_hero
         public int incPointsPerSucceed = 15;
 
         public int maxBombCounterElement = 4;
-        public int chanceBombElement = 7;//range 0-10
+        public int chanceBombElement = 0;//range 0-10
 
         public int amountElementsSameTime = 3;
         public string nickname = "Player";

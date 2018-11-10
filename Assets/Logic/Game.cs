@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace dj_hero
 {
@@ -41,6 +42,8 @@ namespace dj_hero
             time--;
 
             //game.view.DisplayTime(time);
+            game.script.DisplayTime(time);
+            Debug.Log(game.script.title);
 
 
             if (time <= 0)
@@ -52,7 +55,7 @@ namespace dj_hero
             }
             else
             {
-                //game.DecreaseProgresBarPerSec();
+                game.DecreaseProgresBarPerSec();
                 game.TimeControler();
             }
         }
@@ -61,7 +64,13 @@ namespace dj_hero
     public sealed class Game
     {
         private GameTimer timer;
-        //public GameView view;
+
+
+        //public GameView view;    // <------------------------------------------------- HOW
+        public GameScript script;
+
+
+
         private int points;
         private string playerName;
         public Song song;
@@ -72,14 +81,19 @@ namespace dj_hero
         private bool gameOverProcesDone;
         private bool gameOverByUserInterrupt;
 
-        public Game(MatchOption _matchOption, Song _song)
+        public Game(MatchOption _matchOption, Song _song, GameScript _script)
         {
+            script = _script;
+            if(script != null)
+            {
+                Debug.Log("script chyba git");
+            }
             matchOpttions = _matchOption;
             song = _song;
             playerName = matchOpttions.nickname;
             points = 0;
             progresBarValue = matchOpttions.progresBarValue;
-            timer = new GameTimer(song.duration, this);
+            timer = new GameTimer(30, this);
             //keyTimer = new KeyTimer(this);
             //view = new GameView();
             gameOverByUserInterrupt = false;
@@ -103,28 +117,33 @@ namespace dj_hero
 
             t = new Thread(delegate ()
             {
+                while (!gameOverProcesDone)
+                {
+                    currentCharacter = script.getCharacter();
+                    while (currentCharacter == "")
+                    {
+                        continue;
+                    }
+                    if (currentCharacter == mainElement.character.ToString().ToUpper())
+                    {
+                        SuccesedClick();
+                    }
+                    else
+                    {
+                        if (currentCharacter == "ESCAPE")
+                        {
+                            gameOverByUserInterrupt = true;
+                            EndGame();
+                        }
+                        else
+                        {
+                            Debug.Log("MISSCLICK by t thread");
+                            MissClick();
+                        }
+                    }
+                    script.clearCharacter();
 
-                //while (true)
-                //{
-                //    currentCharacter = keyTimer.getCharacter();
-                //    if (currentCharacter == mainElement.character.ToString().ToUpper())
-                //    {
-                //        SuccesedClick();
-                //    }
-                //    else
-                //    {
-                //        if (currentCharacter == "ESCAPE")
-                //        {
-                //            gameOverByUserInterrupt = true;
-                //            EndGame();
-                //        }
-                //        else
-                //        {
-                //            MissClick();
-                //        }
-                //    }
-                    
-                //}
+                }
 
             });
             t.Start();
@@ -152,11 +171,11 @@ namespace dj_hero
         {
             // ++ points
             points += 10;
-            //view.DisplayPoints(points);
+            script.DisplayPoints(points);
             // progres bar ++
             IncreaseProgresBar();
             //load next segment
-            //mainElement.counter--;
+            mainElement.counter--;
             LoadSegment();
         }
 
@@ -169,12 +188,12 @@ namespace dj_hero
             // progresbar -- or nothing
             DecreaseProgresBarPerMiss();
             // load next segment
-            //mainElement.counter = 0;
+            mainElement.counter = 0;
             LoadSegment();
         }
 
-        //private AppearingChar mainElement;
-        //private Queue<AppearingChar> queue = new Queue<AppearingChar>();
+        private AppearingChar mainElement;
+        private Queue<AppearingChar> queue = new Queue<AppearingChar>();
         private void LoadSegment()
         {
             if(gameOverProcesDone)
@@ -185,34 +204,34 @@ namespace dj_hero
             //========================
             //3 posibility
             //first load
-            //if (mainElement == null)
-            //{
+            if (mainElement == null)
+            {
 
-            //    for (int i = 1; i <= matchOpttions.amountElementsSameTime; i++)
-            //    {
-            //        mainElement = new AppearingChar(matchOpttions);
-            //        queue.Enqueue(mainElement);
-            //        view.Add(mainElement);
-            //    }
-            //    mainElement = queue.Dequeue();
+                for (int i = 1; i <= matchOpttions.amountElementsSameTime; i++)
+                {
+                    mainElement = new AppearingChar(matchOpttions);
+                    queue.Enqueue(mainElement);
+                    script.Add(mainElement);
+                }
+                mainElement = queue.Dequeue();
 
-            //    return;
-            //}
-            ////refresh
-            //if (mainElement.counter > 0)
-            //{
-            //    view.UpdateCharacter(mainElement);
-            //}
-            ////hit
-            //if (mainElement.counter == 0)
-            //{
-            //    mainElement = new AppearingChar(matchOpttions);
-            //    queue.Enqueue(mainElement);
-            //    view.Add(mainElement);
+                return;
+            }
+            //refresh
+            if (mainElement.counter > 0)
+            {
+                script.UpdateCharacter(mainElement);
+            }
+            //hit
+            if (mainElement.counter == 0)
+            {
+                mainElement = new AppearingChar(matchOpttions);
+                queue.Enqueue(mainElement);
+                script.Add(mainElement);
 
-            //    mainElement = queue.Dequeue();
+                mainElement = queue.Dequeue();
 
-            //}
+            }
         }
         private Thread endGameThread;
         public void EndGame()
@@ -248,7 +267,7 @@ namespace dj_hero
             if (progresBarValue < 1)
                 return;
             progresBarValue -= matchOpttions.progresBarLosePerSec;
-            //view.DisplayProgressBar(progresBarValue);
+            script.DisplayProgressBar(progresBarValue);
             if (progresBarValue < 1)
             {
                 EndGame();
@@ -260,7 +279,7 @@ namespace dj_hero
             if (progresBarValue < 1)
                 return;
             progresBarValue -= matchOpttions.decPointsPerMiss;
-            //view.DisplayProgressBar(progresBarValue);
+            script.DisplayProgressBar(progresBarValue);
             if (progresBarValue < 1)
             {
                 EndGame();
@@ -270,7 +289,7 @@ namespace dj_hero
         public void IncreaseProgresBar()
         {
             progresBarValue += matchOpttions.incPointsPerSucceed;
-            //view.DisplayProgressBar(progresBarValue);
+            script.DisplayProgressBar(progresBarValue);
             if (progresBarValue > 100)
                 progresBarValue = 100;
         }
