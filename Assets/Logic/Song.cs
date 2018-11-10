@@ -41,7 +41,8 @@ namespace dj_hero
 
         public Song(string filename)
         {
-            path = Audio.libraryPath + "/" + filename;
+            //path = Audio.libraryPath + "/" + filename;
+            path = ("Songs/" + filename).Substring(0, filename.Length + 2);
             string difficultyLevel = filename.Substring(filename.Length - 5, 1);
             if (difficultyLevel == "1")
                 difficulty = Difficulty.easy;
