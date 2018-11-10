@@ -1,11 +1,19 @@
-﻿using System.Collections;
+﻿using Assets.Managers;
+using dj_hero;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
 
+    public Text timeText;
     private int characterIndex;
     private int charactersNo;
+    public Game game;
+    public string title = GameManager.song.GetTitle();
+
+    private string sTime;
 
 
     public void DisplayTime(int time)
@@ -13,32 +21,71 @@ public class GameScript : MonoBehaviour {
         int minutes = time / 60;
         int seconds = time % 60;
 
-        string sTime = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
+        sTime = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
         sTime += ":";
         sTime += seconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
+
     }
 
     public void DisplayProgressBar(int percent)
     {
-
+        Debug.Log("Progres bar wynosi " + percent);
     }
 
     public void DisplayPoints(int points)
     {
+        Debug.Log("Punkty wynosza " + points);
+
     }
 
 
-    public void Add()
+    public void Add(AppearingChar character)
     {
+        Debug.Log("Dodano literke " + character.character);
+    }
+
+    public void UpdateCharacter(AppearingChar character)
+    {
+        Debug.Log("no chance");
        
     }
 
-    public void UpdateCharacter()
+    public string getCharacter()
     {
-       
+        return character;
+    }
+    public void clearCharacter()
+    {
+        character = null;
+    }
+
+
+    private string character;
+
+    // Use this for initialization
+    void Start()
+    {
+        game = new Game(GameManager.options, GameManager.song, this);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timeText.text = sTime;
+
+        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKey(vKey))
+            {
+                character = vKey.ToString();
+
+            }
+        }
     }
 
 }
+
+
 
 //public class KeyTimer
 //{
