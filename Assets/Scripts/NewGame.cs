@@ -61,7 +61,7 @@ public class NewGame : MonoBehaviour {
                 songElement.GetComponent<SongElement>().Song = songs[i]; //Nadaje mu obiekt piosenki
                 songElement.GetComponent<SongElement>().nickname = nicknameInput.text;
 
-                songItems.Add(songElement); //Dodaje do listy prefabów
+                songItems.Add(songElement); //Dodaje do listy prefabów                           po co???????
             }
         }
         else

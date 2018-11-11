@@ -39,11 +39,11 @@ namespace dj_hero
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Debug.Log("clock-Tick -------------------");
             time--;
 
             //game.view.DisplayTime(time);
             game.script.DisplayTime(time);
-            Debug.Log(game.script.title);
 
 
             if (time <= 0)
@@ -83,6 +83,8 @@ namespace dj_hero
 
         public Game(MatchOption _matchOption, Song _song, GameScript _script)
         {
+            Debug.Log("game odpalone");
+
             script = _script;
             if(script != null)
             {
@@ -94,8 +96,6 @@ namespace dj_hero
             points = 0;
             progresBarValue = matchOpttions.progresBarValue;
             timer = new GameTimer(30, this);
-            //keyTimer = new KeyTimer(this);
-            //view = new GameView();
             gameOverByUserInterrupt = false;
             gameOverProcesDone = false;
             play();
@@ -103,10 +103,9 @@ namespace dj_hero
         }
         private Thread t;
         public Thread readThread;
-        //public KeyTimer keyTimer;
         public void play()
         {
-            //view.Render();
+            script.DisplayPoints(points);
 
             //Audio.StartSong(song);
             timer.RunTimer();
@@ -119,13 +118,14 @@ namespace dj_hero
             {
                 while (!gameOverProcesDone)
                 {
-                    currentCharacter = script.getCharacter();
-                    while (currentCharacter == "")
+                    if (script.KeyPressed() == false)
                     {
                         continue;
                     }
+                    currentCharacter = script.getCharacter();
                     if (currentCharacter == mainElement.character.ToString().ToUpper())
                     {
+                        Debug.Log("Succeed clikc And character is " + currentCharacter);
                         SuccesedClick();
                     }
                     else
@@ -137,7 +137,7 @@ namespace dj_hero
                         }
                         else
                         {
-                            Debug.Log("MISSCLICK by t thread");
+                            Debug.Log("MISSCLICK by t thread And character is " + currentCharacter);
                             MissClick();
                         }
                     }
@@ -148,6 +148,7 @@ namespace dj_hero
             });
             t.Start();
             t.Join();
+
 
             Debug.Log("koniec gry");
 
