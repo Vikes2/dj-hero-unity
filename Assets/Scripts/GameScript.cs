@@ -2,18 +2,35 @@
 using dj_hero;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
 
     public Text timeText;
+    public Text pointsText;
     private int characterIndex;
     private int charactersNo;
     public Game game;
-    public string title = GameManager.song.GetTitle();
+    public string title;
+    //public GameObject A;
+    //public GameObject S;
+    //public GameObject D;
+    //public GameObject J;
+    //public GameObject K;
+    //public GameObject L;
+    //public Dictionary<string, GameObject> dictionaryAlphabet;
 
+    public GameObject playBoard;
+
+    public GameObject characterPrefab;
+
+    private int points = 0;
     private string sTime;
+
+    private AppearingChar passingCharacter = null;
+    private bool creationNeeded = false;
 
 
     public void DisplayTime(int time)
@@ -32,16 +49,16 @@ public class GameScript : MonoBehaviour {
         Debug.Log("Progres bar wynosi " + percent);
     }
 
-    public void DisplayPoints(int points)
+    public void DisplayPoints(int _points)
     {
-        Debug.Log("Punkty wynosza " + points);
-
+        points = _points;
     }
 
 
     public void Add(AppearingChar character)
     {
-        Debug.Log("Dodano literke " + character.character);
+        passingCharacter = character;
+        creationNeeded = true;
     }
 
     public void UpdateCharacter(AppearingChar character)
@@ -56,87 +73,112 @@ public class GameScript : MonoBehaviour {
     }
     public void clearCharacter()
     {
-        character = null;
+        character = "Bug";
+        pressed = false;
     }
 
+    public bool KeyPressed()
+    {
+        if(pressed == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool pressed = false;
 
     private string character;
+
+    private void startGame()
+    {
+        game = new Game(GameManager.options, GameManager.song, this);
+
+    }
+    private GameObject mainElement;
+    private Queue<GameObject> queue = new Queue<GameObject>();
 
     // Use this for initialization
     void Start()
     {
-        game = new Game(GameManager.options, GameManager.song, this);
+        Thread t = new Thread(startGame);
+        t.Start();
+        title = GameManager.song.GetTitle();
     }
 
     // Update is called once per frame
     void Update()
     {
         timeText.text = sTime;
+        pointsText.text = points.ToString();
 
-        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+
+        if(pressed == false)
         {
-            if (Input.GetKey(vKey))
+            foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
             {
-                character = vKey.ToString();
+                if (Input.GetKeyDown(vKey))
+                {
+                    character = vKey.ToString();
+                    Debug.Log("key -"+ vKey.ToString() +" is pressed in update opinion");
+                    pressed = true;
 
+                }
             }
         }
+
+        if (creationNeeded)
+        {
+            GameObject appChar = Instantiate(characterPrefab);
+            appChar.transform.SetParent(playBoard.transform, false);
+            appChar.GetComponent<CharacterElement>().Character = passingCharacter.character.ToString();
+
+            float x;
+            float y;
+            float z;
+            Vector3 pos;
+
+            x = Random.Range(-360, 350);
+            y = Random.Range(-130, 90);
+            z = 0;
+            pos = new Vector3(x, y, z);
+
+            appChar.transform.localPosition = pos;
+
+
+            creationNeeded = false;
+
+
+            if (queue.Count==2)
+            {
+
+                mainElement.SetActive(false);
+                mainElement = appChar;
+                queue.Enqueue(mainElement);
+
+                mainElement = queue.Dequeue();
+                return;
+
+
+            }
+            else
+            {
+                if(mainElement == null)
+                {
+                    mainElement = appChar;
+
+                }
+                else
+                {
+                    queue.Enqueue(mainElement);
+                    mainElement = appChar;
+                }
+            }
+        }
+
     }
 
 }
-
-
-
-//public class KeyTimer
-//{
-
-//    Game game;
-//    public ConsoleKeyInfo pressedKey;
-
-//    private System.Timers.Timer timer = new System.Timers.Timer(100);
-
-//    public KeyTimer(Game _game)
-//    {
-//        pressedKey = new ConsoleKeyInfo();
-
-//        game = _game;
-//    }
-
-//    public void RunTimer()
-//    {
-//        timer.Elapsed += Timer_Elapsed;
-//        timer.Enabled = true;
-//    }
-
-//    public void StopTimer()
-//    {
-//        pressedKey = new ConsoleKeyInfo();
-//        timer.Stop();
-//        timer.Dispose();
-//        game = null;
-//        pressedKey = new ConsoleKeyInfo();
-
-//    }
-//    public string getCharacter()
-//    {
-//        while (pressedKey.Key == 0) ;
-
-//        string character = pressedKey.Key.ToString();
-//        if (pressedKey.Key == ConsoleKey.Escape)
-//        {
-//            character = "ESCAPE";
-//        }
-//        pressedKey = new ConsoleKeyInfo();
-
-//        return character;
-//    }
-
-//    private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-//    {
-//        if (Console.KeyAvailable)
-//        {
-//            pressedKey = new ConsoleKeyInfo();
-//            pressedKey = Console.ReadKey(true);
-//        }
-//    }
-//}
