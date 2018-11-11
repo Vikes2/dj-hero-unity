@@ -13,8 +13,10 @@ public class NewGame : MonoBehaviour {
     private List<GameObject> songItems = new List<GameObject>();
 
     public TMP_InputField nicknameInput;
+    public TMP_Text nicknameErrorInput;
     public TMP_Text welcomeText;
     public AudioSource songSelectionAudio;
+    public AudioSource newGameAudioSource;
 
     public GameObject songContainer;
     public GameObject songPrefab;
@@ -22,20 +24,35 @@ public class NewGame : MonoBehaviour {
     private List<Song> songs;
     private Song testSong;
 
+    public void BackToMenu()
+    {
+        newGameAudioSource.Stop();
+        Scenes.Load("MenuScene");
+    }
+
     public void ToggleView()
     {
         bool isNewGameActive = newGameView.activeInHierarchy;
+
+        if(isNewGameActive && nicknameInput.text == string.Empty)
+        {
+            nicknameErrorInput.text = "Nieprawidlowy nick";
+            newGameAudioSource.Play();
+            return;
+        }
+
+        newGameAudioSource.Stop();
+
+        nicknameErrorInput.text = "";
+
         newGameView.SetActive(!isNewGameActive);
         songSelectionView.SetActive(isNewGameActive);
 
         if (isNewGameActive)
         {
-            //@TODO Walidacja danych
             welcomeText.text = "Witaj " + nicknameInput.text;
 
             songSelectionAudio.Play();
-
-            //Debug.Log(songs.Count);
 
             for(int i = 0; i < songs.Count; i++)
             {
@@ -66,10 +83,6 @@ public class NewGame : MonoBehaviour {
 
         songSelectionView.SetActive(false);
 
-        testSong = new Song("Imagine Dragons - Natural1.mp3");
-
-        //Tymczasowe!!!
-        Audio.PrepareSongs();
         songs = Audio.GetSongList();
 	}
 	

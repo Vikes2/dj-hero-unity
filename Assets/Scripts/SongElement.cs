@@ -4,9 +4,10 @@ using UnityEngine;
 using TMPro;
 using dj_hero;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using Assets.Managers;
 
-public class SongElement : MonoBehaviour {
+public class SongElement : MonoBehaviour, IPointerClickHandler {
 
     public TMP_Text titleText;
     private string title;
@@ -39,7 +40,7 @@ public class SongElement : MonoBehaviour {
         }
     }
 
-    public void SongOnClick()
+    public void SongOnClick(PointerEventData eventData)
     {
         MatchOption matchOptions = new MatchOption(song);
         matchOptions.nickname = nickname;
