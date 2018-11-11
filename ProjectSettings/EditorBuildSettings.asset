@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelectionSongScene.unity
     guid: d726cb0e45ad8d84da9e757d066750e6
+  - enabled: 1
+    path: Assets/Scenes/EndGameScene.unity
+    guid: 381f9bbe925cb1348ae8826628692f7c
   m_configObjects: {}
