@@ -565,6 +565,7 @@ GameObject:
   - component: {fileID: 565531834}
   - component: {fileID: 565531833}
   - component: {fileID: 565531832}
+  - component: {fileID: 565531835}
   m_Layer: 5
   m_Name: PlayAgainButton
   m_TagString: Untagged
@@ -677,6 +678,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 565531830}
   m_CullTransparentMesh: 0
+--- !u!114 &565531835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 565531830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &759415131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,6 +1087,7 @@ GameObject:
   - component: {fileID: 1561592034}
   - component: {fileID: 1561592033}
   - component: {fileID: 1561592032}
+  - component: {fileID: 1561592035}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -1187,6 +1200,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1561592030}
   m_CullTransparentMesh: 0
+--- !u!114 &1561592035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1561592030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1590622330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,6 +1334,7 @@ GameObject:
   - component: {fileID: 1677378490}
   - component: {fileID: 1677378489}
   - component: {fileID: 1677378488}
+  - component: {fileID: 1677378491}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1422,6 +1447,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1677378486}
   m_CullTransparentMesh: 0
+--- !u!114 &1677378491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1677378486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868016773
 GameObject:
   m_ObjectHideFlags: 0
