@@ -40,6 +40,7 @@ public class GameScript : MonoBehaviour {
     private AppearingChar passingCharacter = null;
     private GameObject mainElement;
     private Queue<GameObject> queue = new Queue<GameObject>();
+    private List<Vector3> busyPositions = new List<Vector3>();
     private bool creationNeeded = false;
     private bool updateNeeded = false;
     public bool missed = false;
@@ -124,7 +125,7 @@ public class GameScript : MonoBehaviour {
         game = new Game(GameManager.options, GameManager.song, this);
 
     }
-    
+
     // Use this for initialization
     void Start()
     {
@@ -194,26 +195,54 @@ public class GameScript : MonoBehaviour {
 
             doneCreation++;
 
-            Debug.Log("Po sprawdzeniu warunku " + incomingCounter +" a zrobione: " + doneCreation);
 
             string character = incomingCreation[doneCreation -1].character.ToString();
             int counter = incomingCreation[doneCreation - 1].counter;
-            Debug.Log("tworzymy z wejscia : " + character);
             GameObject appChar = Instantiate(characterPrefab);
             appChar.transform.SetParent(playBoard.transform, false);
             appChar.GetComponent<CharacterElement>().Character = character;
             appChar.GetComponent<CounterScript>().Counter = counter;
 
-             // wih 55
-            x = Random.Range(-360, 350);
-            y = Random.Range(-130, 90);
-            z = 0;
-            pos = new Vector3(x, y, z);
+            // wih 55
+            bool correctPos = true;
+            do
+            {
+
+                x = Random.Range(-360, 350);
+                y = Random.Range(-130, 90);
+                z = 0;
+                pos = new Vector3(x, y, z);
+
+                foreach (Vector3 vector3 in busyPositions)
+                {
+                    Debug.Log("" + vector3.x);
+                    if (pos.x > vector3.x && pos.x < vector3.x + 50 && pos.y > vector3.y && pos.y < vector3.y + 50 ||
+                        pos.x > vector3.x && pos.x < vector3.x + 55 && pos.y < vector3.y && pos.y > vector3.y - 55 ||
+                        pos.x < vector3.x && pos.x > vector3.x - 55 && pos.y < vector3.y && pos.y > vector3.y - 55 ||
+                        pos.x < vector3.x && pos.x > vector3.x - 55 && pos.y > vector3.y && pos.y < vector3.y + 50
+                        )
+                    {
+                        Debug.Log("zleeeeeeeeeeeee prosimy jeszcze raz");
+                        correctPos = false;
+                        break;
+                    }
+                    else
+                    {
+                        correctPos = true;
+                    }
+                }
+            } while (!correctPos);
+
 
             appChar.transform.localPosition = pos;
 
-
-
+            busyPositions.Add(pos);
+            if(busyPositions.Count > 3)
+            {
+                busyPositions.RemoveAt(0);
+                busyPositions.TrimExcess();
+            }
+            
             if (queue.Count == 2)
             {
                 Destroy(mainElement);
