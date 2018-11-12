@@ -39,7 +39,6 @@ namespace dj_hero
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Debug.Log("clock-Tick -------------------");
             time--;
 
             //game.view.DisplayTime(time);
@@ -83,13 +82,9 @@ namespace dj_hero
 
         public Game(MatchOption _matchOption, Song _song, GameScript _script)
         {
-            Debug.Log("game odpalone");
 
             script = _script;
-            if(script != null)
-            {
-                Debug.Log("script chyba git");
-            }
+
             matchOpttions = _matchOption;
             song = _song;
             playerName = matchOpttions.nickname;
@@ -128,7 +123,6 @@ namespace dj_hero
                     currentCharacter = script.getCharacter();
                     if (currentCharacter == mainElement.character.ToString().ToUpper())
                     {
-                        Debug.Log("Succeed clikc And character is " + currentCharacter);
                         SuccesedClick();
                     }
                     else
@@ -140,7 +134,6 @@ namespace dj_hero
                         }
                         else
                         {
-                            Debug.Log("MISSCLICK by t thread And character is " + currentCharacter);
                             MissClick();
                         }
                     }
@@ -223,6 +216,7 @@ namespace dj_hero
                     mainElement = new AppearingChar(matchOpttions);
                     queue.Enqueue(mainElement);
                     script.Add(mainElement);
+                    Debug.Log("Game tworzy na start literke["+i+"] " + mainElement.character);
                 }
                 mainElement = queue.Dequeue();
 
@@ -239,6 +233,7 @@ namespace dj_hero
                 mainElement = new AppearingChar(matchOpttions);
                 queue.Enqueue(mainElement);
                 script.Add(mainElement);
+                Debug.Log("Game tworzy nastepna: " + mainElement.character);
 
                 mainElement = queue.Dequeue();
 
