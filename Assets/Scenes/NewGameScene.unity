@@ -1167,6 +1167,7 @@ GameObject:
   - component: {fileID: 437671223}
   - component: {fileID: 437671222}
   - component: {fileID: 437671221}
+  - component: {fileID: 437671224}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1279,6 +1280,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 437671219}
   m_CullTransparentMesh: 0
+--- !u!114 &437671224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 437671219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &749035282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,6 +1491,7 @@ GameObject:
   - component: {fileID: 954297995}
   - component: {fileID: 954297994}
   - component: {fileID: 954297993}
+  - component: {fileID: 954297996}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1591,6 +1604,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 954297991}
   m_CullTransparentMesh: 0
+--- !u!114 &954297996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 954297991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1377336447
 GameObject:
   m_ObjectHideFlags: 0
@@ -2953,6 +2977,7 @@ GameObject:
   - component: {fileID: 1897912675}
   - component: {fileID: 1897912674}
   - component: {fileID: 1897912673}
+  - component: {fileID: 1897912676}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -3065,6 +3090,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1897912671}
   m_CullTransparentMesh: 0
+--- !u!114 &1897912676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1897912671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85407382c3ec09240a2ef201e39409ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1998643230
 GameObject:
   m_ObjectHideFlags: 0
