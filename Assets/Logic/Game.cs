@@ -93,6 +93,8 @@ namespace dj_hero
             timer = new GameTimer(30, this);
             gameOverByUserInterrupt = false;
             gameOverProcesDone = false;
+
+            script.loadSongPath = song.GetPath();
             play();
 
         }
@@ -117,6 +119,7 @@ namespace dj_hero
                     {
                         continue;
                     }
+                    //script.minorAudioSource.Stop();
                     currentCharacter = script.getCharacter();
                     if (currentCharacter == mainElement.character.ToString().ToUpper())
                     {
@@ -144,6 +147,11 @@ namespace dj_hero
 
 
             Debug.Log("koniec gry");
+
+            Rank rank = new Rank(song);
+            rank.AddRecord(playerName, points);
+
+            script.EndGame();
 
             //if (gameOverByUserInterrupt == true)
             //{
@@ -177,6 +185,8 @@ namespace dj_hero
         {
             if (gameOverProcesDone)
                 return;
+
+            script.missed = true;
             //Audio.StartServiceTrack("beep");
 
             // progresbar -- or nothing

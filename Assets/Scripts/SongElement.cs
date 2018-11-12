@@ -10,6 +10,7 @@ using Assets.Managers;
 public class SongElement : MonoBehaviour, IPointerClickHandler {
 
     public TMP_Text titleText;
+    public TMP_Text difficultyText;
     private string title;
     private Song song;
     public string nickname;
@@ -37,6 +38,7 @@ public class SongElement : MonoBehaviour, IPointerClickHandler {
         {
             song = value;
             titleText.text = song.GetTitle();
+            difficultyText.text = "Poziom trudnosci: " + song.getDifficultyName();
         }
     }
 

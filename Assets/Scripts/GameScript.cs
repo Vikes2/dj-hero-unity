@@ -26,6 +26,9 @@ public class GameScript : MonoBehaviour {
 
     public GameObject playBoard;
 
+    public AudioSource mainAudioSource;
+    public AudioSource minorAudioSource;
+
     public GameObject characterPrefab;
 
     private int points = 0;
@@ -33,6 +36,14 @@ public class GameScript : MonoBehaviour {
 
     private AppearingChar passingCharacter = null;
     private bool creationNeeded = false;
+    public bool missed = false;
+    public string loadSongPath = "";
+    private bool endGame = false;
+
+    public void EndGame()
+    {
+        endGame = true;
+    }
 
     private float progressbarValue = 1;
 
@@ -45,6 +56,11 @@ public class GameScript : MonoBehaviour {
         sTime += ":";
         sTime += seconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
 
+    }
+
+    public void LoadSong(string path)
+    {
+        mainAudioSource.clip = Resources.Load<AudioClip>(path);
     }
 
     public void DisplayProgressBar(int percent)
@@ -123,6 +139,21 @@ public class GameScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (endGame)
+        {
+            Scenes.Load("EndGameScene");
+        }
+
+        if(loadSongPath != "")
+        {
+            LoadSong(loadSongPath);
+        }
+
+        if(mainAudioSource.clip != null && !mainAudioSource.isPlaying)
+        {
+            mainAudioSource.Play();
+        }
+
         timeText.text = sTime;
         pointsText.text = points.ToString();
         if (progressbarValue < 0)
@@ -215,58 +246,12 @@ public class GameScript : MonoBehaviour {
 
         }
 
-        //if (creationNeeded)
-        //{
-        //    creationNeeded = false;
-        //    Debug.Log("tworzymy z wejscia : " + passingCharacter.character.ToString());
-        //    GameObject appChar = Instantiate(characterPrefab);
-        //    appChar.transform.SetParent(playBoard.transform, false);
-        //    appChar.GetComponent<CharacterElement>().Character = passingCharacter.character.ToString();
 
-        //    float x;
-        //    float y;
-        //    float z;
-        //    Vector3 pos;
-
-        //    x = Random.Range(-360, 350);
-        //    y = Random.Range(-130, 90);
-        //    z = 0;
-        //    pos = new Vector3(x, y, z);
-
-        //    appChar.transform.localPosition = pos;
-
-
-
-
-        //    if (queue.Count==2)
-        //    {
-
-        //        Destroy(mainElement);
-        //        mainElement = appChar;
-        //        queue.Enqueue(mainElement);
-
-        //        mainElement = queue.Dequeue();
-        //        return;
-
-
-        //    }
-        //    else
-        //    {
-        //        if(mainElement == null)
-        //        {
-        //            mainElement = appChar;
-        //            Debug.Log("Ellllo ze scripta pierwsza litera " + passingCharacter.character.ToString());
-
-        //        }
-        //        else
-        //        {
-        //            queue.Enqueue(mainElement);
-        //            mainElement = appChar;
-        //            Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + passingCharacter.character.ToString());
-
-        //        }
-        //    }
-        //}
+        if (missed)
+        {
+            minorAudioSource.Play();
+            missed = false;
+        }
 
     }
 

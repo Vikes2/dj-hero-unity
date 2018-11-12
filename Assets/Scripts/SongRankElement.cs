@@ -19,10 +19,12 @@ public class SongRankElement : MonoBehaviour, IPointerClickHandler {
         {
             song = value;
             TitleText.text = song.GetTitle();
+            DifficultyText.text = "Poziom trudnosci: " + song.getDifficultyName();
         }
     } 
     public GameObject rankContainer;
     public TMP_Text TitleText;
+    public TMP_Text DifficultyText;
 
     public void ShowRank()
     {
