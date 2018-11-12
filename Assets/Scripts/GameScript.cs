@@ -21,6 +21,8 @@ public class GameScript : MonoBehaviour {
     //public GameObject K;
     //public GameObject L;
     //public Dictionary<string, GameObject> dictionaryAlphabet;
+    public Slider progresbar;
+    public GameObject progresbarObject;
 
     public GameObject playBoard;
 
@@ -32,6 +34,7 @@ public class GameScript : MonoBehaviour {
     private AppearingChar passingCharacter = null;
     private bool creationNeeded = false;
 
+    private float progressbarValue = 1;
 
     public void DisplayTime(int time)
     {
@@ -46,7 +49,9 @@ public class GameScript : MonoBehaviour {
 
     public void DisplayProgressBar(int percent)
     {
-        Debug.Log("Progres bar wynosi " + percent);
+        progressbarValue = ((float)percent / 100);
+
+
     }
 
     public void DisplayPoints(int _points)
@@ -114,7 +119,11 @@ public class GameScript : MonoBehaviour {
     {
         timeText.text = sTime;
         pointsText.text = points.ToString();
-
+        if (progressbarValue < 0)
+        {
+            progresbarObject.SetActive(false);
+        }
+        progresbar.value = progressbarValue;
 
         if(pressed == false)
         {
@@ -123,7 +132,6 @@ public class GameScript : MonoBehaviour {
                 if (Input.GetKeyDown(vKey))
                 {
                     character = vKey.ToString();
-                    Debug.Log("key -"+ vKey.ToString() +" is pressed in update opinion");
                     pressed = true;
 
                 }
@@ -132,6 +140,7 @@ public class GameScript : MonoBehaviour {
 
         if (creationNeeded)
         {
+            Debug.Log("tworzymy z wejscia : " + passingCharacter.character.ToString());
             GameObject appChar = Instantiate(characterPrefab);
             appChar.transform.SetParent(playBoard.transform, false);
             appChar.GetComponent<CharacterElement>().Character = passingCharacter.character.ToString();
@@ -155,7 +164,7 @@ public class GameScript : MonoBehaviour {
             if (queue.Count==2)
             {
 
-                mainElement.SetActive(false);
+                Destroy(mainElement);
                 mainElement = appChar;
                 queue.Enqueue(mainElement);
 
@@ -169,12 +178,15 @@ public class GameScript : MonoBehaviour {
                 if(mainElement == null)
                 {
                     mainElement = appChar;
+                    Debug.Log("Ellllo ze scripta pierwsza litera " + passingCharacter.character.ToString());
 
                 }
                 else
                 {
                     queue.Enqueue(mainElement);
                     mainElement = appChar;
+                    Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + passingCharacter.character.ToString());
+
                 }
             }
         }
