@@ -59,17 +59,21 @@ public class GameScript : MonoBehaviour {
         points = _points;
     }
 
-
+    private List<AppearingChar> incomingCreation = new List<AppearingChar>();
+    private int incomingCounter = 0;
     public void Add(AppearingChar character)
     {
-        passingCharacter = character;
-        creationNeeded = true;
+        incomingCounter++;
+        incomingCreation.Add(character);
+        //passingCharacter = character;
     }
+
+    private bool updateNeeded = false;
 
     public void UpdateCharacter(AppearingChar character)
     {
-        Debug.Log("no chance");
-       
+        updateNeeded = true;
+        //mainElement.GetComponent<CounterScript>().Counter = character.character;
     }
 
     public string getCharacter()
@@ -114,6 +118,8 @@ public class GameScript : MonoBehaviour {
         title = GameManager.song.GetTitle();
     }
 
+    private int doneCreation = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -138,30 +144,46 @@ public class GameScript : MonoBehaviour {
             }
         }
 
-        if (creationNeeded)
+        if (updateNeeded)
         {
-            Debug.Log("tworzymy z wejscia : " + passingCharacter.character.ToString());
+            mainElement.GetComponent<CounterScript>().Counter--;
+            updateNeeded = false;
+        }
+
+        if(incomingCounter > doneCreation)
+        {
+            doneCreation++;
+
+            Debug.Log("Po sprawdzeniu warunku " + incomingCounter +" a zrobione: " + doneCreation);
+
+
+            string character = incomingCreation[doneCreation -1].character.ToString();
+            int counter = incomingCreation[doneCreation - 1].counter;
+            Debug.Log("tworzymy z wejscia : " + character);
             GameObject appChar = Instantiate(characterPrefab);
             appChar.transform.SetParent(playBoard.transform, false);
-            appChar.GetComponent<CharacterElement>().Character = passingCharacter.character.ToString();
+            appChar.GetComponent<CharacterElement>().Character = character;
+            appChar.GetComponent<CounterScript>().Counter = counter;
 
             float x;
             float y;
             float z;
             Vector3 pos;
-
+             // wih 55
             x = Random.Range(-360, 350);
             y = Random.Range(-130, 90);
             z = 0;
             pos = new Vector3(x, y, z);
 
+
+
+
             appChar.transform.localPosition = pos;
 
 
-            creationNeeded = false;
 
 
-            if (queue.Count==2)
+            if (queue.Count == 2)
             {
 
                 Destroy(mainElement);
@@ -175,21 +197,76 @@ public class GameScript : MonoBehaviour {
             }
             else
             {
-                if(mainElement == null)
+                if (mainElement == null)
                 {
                     mainElement = appChar;
-                    Debug.Log("Ellllo ze scripta pierwsza litera " + passingCharacter.character.ToString());
+                    Debug.Log("Ellllo ze scripta pierwsza litera " + character);
 
                 }
                 else
                 {
                     queue.Enqueue(mainElement);
                     mainElement = appChar;
-                    Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + passingCharacter.character.ToString());
+                    Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + character);
 
                 }
             }
+
+
         }
+
+        //if (creationNeeded)
+        //{
+        //    creationNeeded = false;
+        //    Debug.Log("tworzymy z wejscia : " + passingCharacter.character.ToString());
+        //    GameObject appChar = Instantiate(characterPrefab);
+        //    appChar.transform.SetParent(playBoard.transform, false);
+        //    appChar.GetComponent<CharacterElement>().Character = passingCharacter.character.ToString();
+
+        //    float x;
+        //    float y;
+        //    float z;
+        //    Vector3 pos;
+
+        //    x = Random.Range(-360, 350);
+        //    y = Random.Range(-130, 90);
+        //    z = 0;
+        //    pos = new Vector3(x, y, z);
+
+        //    appChar.transform.localPosition = pos;
+
+
+
+
+        //    if (queue.Count==2)
+        //    {
+
+        //        Destroy(mainElement);
+        //        mainElement = appChar;
+        //        queue.Enqueue(mainElement);
+
+        //        mainElement = queue.Dequeue();
+        //        return;
+
+
+        //    }
+        //    else
+        //    {
+        //        if(mainElement == null)
+        //        {
+        //            mainElement = appChar;
+        //            Debug.Log("Ellllo ze scripta pierwsza litera " + passingCharacter.character.ToString());
+
+        //        }
+        //        else
+        //        {
+        //            queue.Enqueue(mainElement);
+        //            mainElement = appChar;
+        //            Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + passingCharacter.character.ToString());
+
+        //        }
+        //    }
+        //}
 
     }
 
