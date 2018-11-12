@@ -24,6 +24,9 @@ public class GameScript : MonoBehaviour {
 
     public GameObject playBoard;
 
+    public AudioSource mainAudioSource;
+    public AudioSource minorAudioSource;
+
     public GameObject characterPrefab;
 
     private int points = 0;
@@ -31,6 +34,14 @@ public class GameScript : MonoBehaviour {
 
     private AppearingChar passingCharacter = null;
     private bool creationNeeded = false;
+    public bool missed = false;
+    public string loadSongPath = "";
+    private bool endGame = false;
+
+    public void EndGame()
+    {
+        endGame = true;
+    }
 
 
     public void DisplayTime(int time)
@@ -42,6 +53,11 @@ public class GameScript : MonoBehaviour {
         sTime += ":";
         sTime += seconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
 
+    }
+
+    public void LoadSong(string path)
+    {
+        mainAudioSource.clip = Resources.Load<AudioClip>(path);
     }
 
     public void DisplayProgressBar(int percent)
@@ -112,6 +128,21 @@ public class GameScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (endGame)
+        {
+            Scenes.Load("EndGameScene");
+        }
+
+        if(loadSongPath != "")
+        {
+            LoadSong(loadSongPath);
+        }
+
+        if(mainAudioSource.clip != null && !mainAudioSource.isPlaying)
+        {
+            mainAudioSource.Play();
+        }
+
         timeText.text = sTime;
         pointsText.text = points.ToString();
 
@@ -177,6 +208,12 @@ public class GameScript : MonoBehaviour {
                     mainElement = appChar;
                 }
             }
+        }
+
+        if (missed)
+        {
+            minorAudioSource.Play();
+            missed = false;
         }
 
     }

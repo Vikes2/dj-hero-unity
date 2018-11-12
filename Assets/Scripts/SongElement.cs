@@ -65,6 +65,10 @@ public class SongElement : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
+        MatchOption matchOptions = new MatchOption(song);
+        matchOptions.nickname = nickname;
+        GameManager.options = matchOptions;
+        GameManager.song = song;
+        SceneManager.LoadScene(2);
     }
 }
