@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Assets.Managers;
 
 public class EndGame : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class EndGame : MonoBehaviour {
 
     public void PlayAgain()
     {
-
+        Scenes.Load("GameScene");
     }
 
     public void BackToMenu()
@@ -24,7 +25,7 @@ public class EndGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        scoreText.text = "Twój wynik: " + GameManager.Score.ToString();
 	}
 	
 	// Update is called once per frame

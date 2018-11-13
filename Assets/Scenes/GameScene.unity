@@ -463,11 +463,13 @@ MonoBehaviour:
   title: Swedish House Mafia - Dont You Worry Child
   progresbar: {fileID: 1787685312}
   progresbarObject: {fileID: 1685896644}
+  progressbarFill: {fileID: 948252337}
   playBoard: {fileID: 752133171}
   mainAudioSource: {fileID: 1352061737}
   minorAudioSource: {fileID: 665590817}
   characterPrefab: {fileID: 1868924434235458, guid: 34a5417aa62719e43822d2d7f4c9a638,
     type: 2}
+  points: 0
   missed: 0
   loadSongPath: 
   pressed: 0

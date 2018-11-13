@@ -46,8 +46,8 @@ public class SongElement : MonoBehaviour, IPointerClickHandler {
     {
         MatchOption matchOptions = new MatchOption(song);
         matchOptions.nickname = nickname;
-        GameManager.options = matchOptions;
-        GameManager.song = song;
+        GameManager.Options = matchOptions;
+        GameManager.Song = song;
         SceneManager.LoadScene(2);
         
     }
@@ -67,8 +67,8 @@ public class SongElement : MonoBehaviour, IPointerClickHandler {
     {
         MatchOption matchOptions = new MatchOption(song);
         matchOptions.nickname = nickname;
-        GameManager.options = matchOptions;
-        GameManager.song = song;
+        GameManager.Options = matchOptions;
+        GameManager.Song = song;
         SceneManager.LoadScene(2);
     }
 }

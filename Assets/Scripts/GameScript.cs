@@ -24,6 +24,7 @@ public class GameScript : MonoBehaviour {
     //public Dictionary<string, GameObject> dictionaryAlphabet;
     public Slider progresbar;
     public GameObject progresbarObject;
+    public GameObject progressbarFill;
 
     public GameObject playBoard;
 
@@ -34,7 +35,7 @@ public class GameScript : MonoBehaviour {
     private List<AppearingChar> incomingCreation = new List<AppearingChar>();
     private int incomingCounter = 0;
 
-    private int points = 0;
+    public int points = 0;
     private string sTime;
 
     private AppearingChar passingCharacter = null;
@@ -122,7 +123,7 @@ public class GameScript : MonoBehaviour {
     
     private void startGame()
     {
-        game = new Game(GameManager.options, GameManager.song, this);
+        game = new Game(GameManager.Options, GameManager.Song, this);
 
     }
 
@@ -131,7 +132,7 @@ public class GameScript : MonoBehaviour {
     {
         Thread t = new Thread(startGame);
         t.Start();
-        title = GameManager.song.GetTitle();
+        title = GameManager.Song.GetTitle();
     }
 
 
@@ -140,7 +141,20 @@ public class GameScript : MonoBehaviour {
     {
         if (endGame)
         {
+            GameManager.Score = points;
             Scenes.Load("EndGameScene");
+        }
+
+        progressbarFill.GetComponent<Image>().color = Color.green;
+
+        if(progressbarValue > 0.3f && progressbarValue < 0.7f)
+        {
+            progressbarFill.GetComponent<Image>().color = Color.yellow;
+        }
+
+        if(progressbarValue < 0.3f)
+        {
+            progressbarFill.GetComponent<Image>().color = Color.red;
         }
 
         if(loadSongPath != "")

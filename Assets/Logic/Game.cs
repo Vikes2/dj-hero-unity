@@ -263,7 +263,7 @@ namespace dj_hero
             endGameThread.Start();
             gameOverProcesDone = true;
             t.Abort();
-
+            script.points = points;
         }
 
         // -- operation on progresbarr
