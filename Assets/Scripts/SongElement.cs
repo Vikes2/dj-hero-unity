@@ -38,20 +38,9 @@ public class SongElement : MonoBehaviour, IPointerClickHandler {
         {
             song = value;
             titleText.text = song.GetTitle();
-            difficultyText.text = "Poziom trudnosci: " + song.getDifficultyName();
+            difficultyText.text = "Poziom trudności: " + song.getDifficultyName();
         }
     }
-
-    public void SongOnClick(PointerEventData eventData)
-    {
-        MatchOption matchOptions = new MatchOption(song);
-        matchOptions.nickname = nickname;
-        GameManager.Options = matchOptions;
-        GameManager.Song = song;
-        SceneManager.LoadScene(2);
-        
-    }
-
 
 	// Use this for initialization
 	void Start () {

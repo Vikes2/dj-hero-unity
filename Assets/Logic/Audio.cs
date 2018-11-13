@@ -72,7 +72,8 @@ namespace dj_hero
                         if(int.TryParse(difficultyLevel,out result))
                         {
                             Song s = new Song(fi.Name);
-                            s.duration = SetDurationSong(s);
+                            AudioClip clip = Resources.Load<AudioClip>(s.GetPath());
+                            s.duration = (int)clip.length;
                             AddSongToList(s);
                         }
 

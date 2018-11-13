@@ -11,17 +11,9 @@ public class GameScript : MonoBehaviour {
 
     public Text timeText;
     public Text pointsText;
-    private int characterIndex;
-    private int charactersNo;
     public Game game;
     public string title;
-    //public GameObject A;
-    //public GameObject S;
-    //public GameObject D;
-    //public GameObject J;
-    //public GameObject K;
-    //public GameObject L;
-    //public Dictionary<string, GameObject> dictionaryAlphabet;
+
     public Slider progresbar;
     public GameObject progresbarObject;
     public GameObject progressbarFill;
@@ -89,13 +81,11 @@ public class GameScript : MonoBehaviour {
     {
         incomingCounter++;
         incomingCreation.Add(character);
-        //passingCharacter = character;
     }
 
     public void UpdateCharacter(AppearingChar character)
     {
         updateNeeded = true;
-        //mainElement.GetComponent<CounterScript>().Counter = character.character;
     }
 
     public string getCharacter()
@@ -229,14 +219,12 @@ public class GameScript : MonoBehaviour {
 
                 foreach (Vector3 vector3 in busyPositions)
                 {
-                    Debug.Log("" + vector3.x);
                     if (pos.x > vector3.x && pos.x < vector3.x + 50 && pos.y > vector3.y && pos.y < vector3.y + 50 ||
                         pos.x > vector3.x && pos.x < vector3.x + 55 && pos.y < vector3.y && pos.y > vector3.y - 55 ||
                         pos.x < vector3.x && pos.x > vector3.x - 55 && pos.y < vector3.y && pos.y > vector3.y - 55 ||
                         pos.x < vector3.x && pos.x > vector3.x - 55 && pos.y > vector3.y && pos.y < vector3.y + 50
                         )
                     {
-                        Debug.Log("zleeeeeeeeeeeee prosimy jeszcze raz");
                         correctPos = false;
                         break;
                     }
@@ -278,14 +266,12 @@ public class GameScript : MonoBehaviour {
                     mainElement.GetComponent<CounterScript>().counter.color = Color.green;
                     mainElement.GetComponent<CharacterElement>().character.fontSize = 56;
                     mainElement.GetComponent<CounterScript>().counter.fontSize = 28.1f;
-                    Debug.Log("Ellllo ze scripta pierwsza litera " + character);
                 }
                 else
                 {
                     queue.Enqueue(appChar);
                     queue.Peek().GetComponent<CharacterElement>().character.color = Color.blue;
                     queue.Peek().GetComponent<CounterScript>().counter.color = Color.blue;
-                    Debug.Log("Siiemmmma ze scripta druga albo czecia litera " + character);
                 }
             }
         }
