@@ -28,7 +28,6 @@ public class SongRankElement : MonoBehaviour, IPointerClickHandler {
 
     public void ShowRank()
     {
-        Debug.Log("click kurde");
         if(Song != null)
         {
             RankManager.ActiveSong = Song;

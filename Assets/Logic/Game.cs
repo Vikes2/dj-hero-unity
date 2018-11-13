@@ -90,7 +90,7 @@ namespace dj_hero
             playerName = matchOpttions.nickname;
             points = 0;
             progresBarValue = matchOpttions.progresBarValue;
-            timer = new GameTimer(30, this);
+            timer = new GameTimer(song.duration, this);
             gameOverByUserInterrupt = false;
             gameOverProcesDone = false;
 
@@ -106,7 +106,6 @@ namespace dj_hero
 
             //Audio.StartSong(song);
             timer.RunTimer();
-            //keyTimer.RunTimer();
 
             LoadSegment();
             string currentCharacter;
@@ -216,7 +215,6 @@ namespace dj_hero
                     mainElement = new AppearingChar(matchOpttions);
                     queue.Enqueue(mainElement);
                     script.Add(mainElement);
-                    Debug.Log("Game tworzy na start literke["+i+"] " + mainElement.character);
                 }
                 mainElement = queue.Dequeue();
 
@@ -233,7 +231,6 @@ namespace dj_hero
                 mainElement = new AppearingChar(matchOpttions);
                 queue.Enqueue(mainElement);
                 script.Add(mainElement);
-                Debug.Log("Game tworzy nastepna: " + mainElement.character);
 
                 mainElement = queue.Dequeue();
 
